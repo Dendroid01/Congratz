@@ -39,5 +39,18 @@ services:
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=congratz;Username=user;Password=password"
     restart: unless-stopped
 
+  dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend:/app
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=congratz;Username=user;Password=password"
+    depends_on:
+      - db
+    command: tail -f /dev/null
+
 volumes:
   db_data:

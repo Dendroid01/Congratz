@@ -21,25 +21,25 @@ namespace Congratz.backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BirthdayPersonShortDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<BirthdayPersonDto>>> GetAll()
         {
             var people = await _context.Persons.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<BirthdayPersonShortDto>>(people));
+            return Ok(_mapper.Map<IEnumerable<BirthdayPersonDto>>(people));
         }
 
         [HttpGet("today")]
-        public async Task<ActionResult<IEnumerable<BirthdayPersonShortDto>>> GetToday()
+        public async Task<ActionResult<IEnumerable<BirthdayPersonDto>>> GetToday()
         {
             var today = DateTime.Today;
             var people = await _context.Persons
                 .Where(p => p.DateOfBirth.Day == today.Day && p.DateOfBirth.Month == today.Month)
                 .ToListAsync();
 
-            return Ok(_mapper.Map<IEnumerable<BirthdayPersonShortDto>>(people));
+            return Ok(_mapper.Map<IEnumerable<BirthdayPersonDto>>(people));
         }
 
         [HttpGet("upcoming")]
-        public async Task<ActionResult<IEnumerable<BirthdayPersonShortDto>>> GetUpcoming()
+        public async Task<ActionResult<IEnumerable<BirthdayPersonDto>>> GetUpcoming()
         {
             var today = DateTime.Today;
             var todayMonth = today.Month;
@@ -85,7 +85,7 @@ namespace Congratz.backend.Controllers
                 .Select(x => x.Person)
                 .ToList();
 
-            return Ok(_mapper.Map<IEnumerable<BirthdayPersonShortDto>>(upcoming));
+            return Ok(_mapper.Map<IEnumerable<BirthdayPersonDto>>(upcoming));
         }
 
         [HttpGet("{id}")]

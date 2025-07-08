@@ -1,5 +1,7 @@
-using BirthdayApp.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Congratz.backend.Mappings;
+using Congratz.backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<BirthdayContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(BirthdayMappingProfile).Assembly);
 
 var app = builder.Build();
 

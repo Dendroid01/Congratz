@@ -1,6 +1,9 @@
-public class BirthdayPersonShortDto
+namespace Congratz.backend.Dtos
 {
-    public int Id { get; set; }
-    public string FullName { get; set; } = null!;
-    public DateTime DateOfBirth { get; set; }
+    public class BirthdayPersonShortDto
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; } = null!;
+        public DateTime DateOfBirth { get; set; }
+    }
 }

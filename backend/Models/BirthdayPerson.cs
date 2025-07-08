@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BirthdayApp.Models
+namespace Congratz.backend.Models
 {
     public class BirthdayPerson
     {

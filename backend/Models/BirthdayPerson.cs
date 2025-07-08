@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Congratz.backend.Models
 {
@@ -13,6 +14,7 @@ namespace Congratz.backend.Models
 
         [Required(ErrorMessage = "Дата рождения обязательна.")]
         [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         [CustomValidation(typeof(BirthdayPerson), nameof(ValidateDateOfBirth))]
         public DateTime DateOfBirth { get; set; }
 

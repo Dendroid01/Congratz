@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Congratz.backend.Data;
+using Congratz.backend.Context;
 using Congratz.backend.Models;
 using Congratz.backend.Dtos;
 using AutoMapper;

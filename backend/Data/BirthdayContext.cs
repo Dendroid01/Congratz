@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Congratz.backend.Models;
 
-namespace Congratz.backend.Data
+namespace Congratz.backend.Context
 {
     public class BirthdayContext : DbContext
     {

@@ -10,7 +10,6 @@ function groupByMonth(people) {
     groups[month].push(person);
   });
 
-  // сортируем внутри месяца по дню рождения
   Object.keys(groups).forEach(month => {
     groups[month].sort((a, b) => {
       const dayA = new Date(a.dateOfBirth).getDate();
@@ -24,7 +23,7 @@ function groupByMonth(people) {
 
 export default function AllBirthdays() {
   const [people, setPeople] = useState([]);
-  const [sortOption, setSortOption] = useState('date'); // date | name
+  const [sortOption, setSortOption] = useState('date');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();

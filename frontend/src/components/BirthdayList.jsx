@@ -33,7 +33,7 @@ export default function BirthdayList({ endpoint }) {
     try {
       const res = await fetch(`/api/birthdaypeople/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Ошибка при удалении');
-      fetchData(); // обновить список после удаления
+      fetchData();
     } catch (err) {
       alert(err.message);
     }

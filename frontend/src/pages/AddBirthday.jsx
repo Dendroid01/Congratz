@@ -1,30 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function EditBirthday() {
-  const { id } = useParams();
+export default function AddBirthday() {
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [photo, setPhoto] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch(`/api/birthdaypeople/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Ошибка загрузки данных');
-        return res.json();
-      })
-      .then(data => {
-        setFullName(data.fullName);
-        setDateOfBirth(data.dateOfBirth.split('T')[0]);
-        if (data.photoBase64 && data.photoMimeType) {
-          setPhotoPreview(`data:${data.photoMimeType};base64,${data.photoBase64}`);
-        }
-      })
-      .catch(err => setError(err.message));
-  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,14 +25,14 @@ export default function EditBirthday() {
     }
 
     try {
-      const res = await fetch(`/api/birthdaypeople/${id}`, {
-        method: 'PUT',
+      const res = await fetch('/api/birthdaypeople', {
+        method: 'POST',
         body: formData,
       });
 
       if (!res.ok) {
         const data = await res.json();
-        let msg = 'Ошибка при обновлении';
+        let msg = 'Ошибка при добавлении';
         if (data && data.errors) {
           msg = Object.values(data.errors).flat().join('\n');
         } else if (data && data.title) {
@@ -58,7 +40,6 @@ export default function EditBirthday() {
         }
         throw new Error(msg);
       }
-
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -67,7 +48,10 @@ export default function EditBirthday() {
 
   return (
     <div className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Редактировать день рождения</h1>
+      <div className="mb-4">
+        <Link to="/" className="text-blue-600 hover:underline">&larr; На главную</Link>
+      </div>
+      <h1 className="text-2xl font-bold mb-4">Добавить день рождения</h1>
       {error && <div className="mb-4 text-red-600 whitespace-pre-line">{error}</div>}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="flex flex-col">
@@ -98,30 +82,14 @@ export default function EditBirthday() {
           <input
             type="file"
             accept="image/jpeg,image/png"
-            onChange={e => {
-              setPhoto(e.target.files[0]);
-              if (e.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = () => setPhotoPreview(reader.result);
-                reader.readAsDataURL(e.target.files[0]);
-              } else {
-                setPhotoPreview(null);
-              }
-            }}
+            onChange={e => setPhoto(e.target.files[0])}
           />
         </label>
-        {photoPreview && (
-          <img
-            src={photoPreview}
-            alt="Фото"
-            className="w-24 h-24 rounded-full object-cover mb-2"
-          />
-        )}
         <button
           type="submit"
-          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
         >
-          Сохранить
+          Добавить
         </button>
       </form>
     </div>

@@ -39,18 +39,29 @@ services:
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=congratz;Username=user;Password=password"
     restart: unless-stopped
 
-  dev:
+#  dev:
+#    build:
+#      context: ./backend
+#      dockerfile: Dockerfile.dev
+#    volumes:
+#      - ./backend:/app
+#    environment:
+#      ASPNETCORE_ENVIRONMENT: Development
+#      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=congratz;Username=user;Password=password"
+#    depends_on:
+#      - db
+#    command: tail -f /dev/null
+
+  frontend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./backend:/app
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=congratz;Username=user;Password=password"
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-congratz
+    ports:
+      - "3000:80"
     depends_on:
-      - db
-    command: tail -f /dev/null
+      - app
+    restart: unless-stopped
 
 volumes:
   db_data:
